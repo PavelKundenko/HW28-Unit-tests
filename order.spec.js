@@ -27,7 +27,14 @@ describe('order.js', () => {
     });
 
     it('should count total price', () => {
-      expect(order.totalPrice).toBe(6.15);
+      const newPizza = new Pizza([], 'small');
+      const newPizza2 = new Pizza([], 'large');
+      spyOnProperty(newPizza, 'pizzaPrice', 'get').and.returnValue(2);
+      spyOnProperty(newPizza2, 'pizzaPrice', 'get').and.returnValue(4);
+      const newOrder = new Order();
+      newOrder.addPizza(newPizza);
+      newOrder.addPizza(newPizza2);
+      expect(newOrder.totalPrice).toBe(6);
     });
 
     it(`should throw an error 'Pizza can't cost 0 USD' in case of pizza price is 0`, () => {
@@ -57,20 +64,20 @@ describe('order.js', () => {
   describe('removePizza()', () => {
     it('should find index of removing object', () => {
       const removingPizza = order.pizzas[1];
-      spyOn(order.pizzas, 'indexOf');
+      const spyIndexOf = spyOn(order.pizzas, 'indexOf');
       order.removePizza(removingPizza);
-      expect(order.pizzas.indexOf).toHaveBeenCalled();
-      expect(order.pizzas.indexOf).toHaveBeenCalledTimes(1);
-      expect(order.pizzas.indexOf).toHaveBeenCalledWith(removingPizza);
+      expect(spyIndexOf).toHaveBeenCalled();
+      expect(spyIndexOf).toHaveBeenCalledTimes(1);
+      expect(spyIndexOf).toHaveBeenCalledWith(removingPizza);
     });
 
     it('should remove an element with index from pizzas array', () => {
       const removingPizza = order.pizzas[1];
-      spyOn(order.pizzas, 'splice');
+      const spySlice = spyOn(order.pizzas, 'splice');
       order.removePizza(removingPizza);
-      expect(order.pizzas.splice).toHaveBeenCalled();
-      expect(order.pizzas.splice).toHaveBeenCalledTimes(1);
-      expect(order.pizzas.splice).toHaveBeenCalledWith(1, 1);
+      expect(spySlice).toHaveBeenCalled();
+      expect(spySlice).toHaveBeenCalledTimes(1);
+      expect(spySlice).toHaveBeenCalledWith(1, 1);
     });
   });
 });
