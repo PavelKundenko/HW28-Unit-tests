@@ -1,5 +1,6 @@
 describe('pizza.js', () => {
   let pizza;
+
   beforeEach(() => {
     pizza = new Pizza(['olives', 'sausage', 'mushrooms'], 'large');
   });
@@ -7,17 +8,20 @@ describe('pizza.js', () => {
   it('should have properties', () => {
     expect(pizza.toppings).toBeDefined();
     expect(pizza.toppings).toBeArrayOfStrings();
+
     expect(pizza.size).toBeDefined();
     expect(pizza.size).toBeString();
   });
 
   it('should have getters', () => {
     expect(pizza.pizzaPrice).toBeDefined();
+
     expect(pizza.toppingsPrice).toBeDefined();
   });
 
   it('should be unique Pizza', () => {
     const newPizza = new Pizza(['olives', 'sausage', 'mushrooms'], 'large');
+
     expect(pizza).toBeInstanceOf(Pizza);
     expect(pizza).not.toBe(newPizza);
   });
@@ -29,12 +33,15 @@ describe('pizza.js', () => {
 
     it('should get toppingsPrice property', function () {
       const spy = spyOnProperty(pizza, 'toppingsPrice', 'get').and.returnValue(5);
+
       pizza.pizzaPrice;
+
       expect(spy).toHaveBeenCalled();
     });
 
     it('should count pizza price', () => {
       spyOnProperty(pizza, 'toppingsPrice', 'get').and.returnValue(5);
+
       expect(pizza.pizzaPrice).toBe(10);
     });
 
